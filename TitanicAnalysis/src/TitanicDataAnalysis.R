@@ -5,9 +5,6 @@ test <- read.csv("../data/test.csv", header = TRUE)
 # Add a column, set the name to Survived...
 test.survived <- data.frame( Survived = rep("None", nrow(test)), test[,])
 
-# Same code but it generates an obscure column name...
-test.survived <- data.frame( rep("None", nrow(test)), test[,])
-
 # Flip columns 1 and 2 so the data can merge with the training data...
 trainC12 <- train[,c(2,1,3,4,5,6,7,8,9,10,11,12)]
 
@@ -61,37 +58,44 @@ p
 
 # Display graph of survival rates...
 library(ggplot2)
-ggplot(trainC12, aes(x = Pclass, fill = factor(Survived))) +
-  geom_bar(width=1, colour="white") + 
-  ylab("Toal Count") + 
-  xlab("Passenger Class") +
-  labs(fill = "Survived")
 
-# flip x and y coordinates
-ggplot(trainC12, aes(x = Pclass, fill = factor(Survived))) +
-  geom_bar(width=1, colour="white") + 
-  ylab("Toal Count") + 
-  xlab("Passenger Class") +
-  labs(fill = "Survived") + 
-  coord_flip()
+survivalRatesGraph <- function() {
+  ggplot(trainC12, aes(x = Pclass, fill = factor(Survived))) +
+    geom_bar(width=1, colour="white") + 
+    ylab("Toal Count") + 
+    xlab("Passenger Class") +
+    labs(fill = "Survived")
+}
+
+survivalRatesGraph()
+
+survivalRatesFlipXYGraph <- function() {
+  ggplot(trainC12, aes(x = Pclass, fill = factor(Survived))) +
+    geom_bar(width=1, colour="white") + 
+    ylab("Toal Count") + 
+    xlab("Passenger Class") +
+    labs(fill = "Survived") + 
+    coord_flip()
+}
+survivalRatesFlipXYGraph()
 
 extractTitle <- function(name) {
   name <- as.character(name)
   
-if(length(grep("Miss.", name)) > 0 ) {
-  return("Miss.")
-
-  } else if (length(grep("Master.", name)) > 0) {
-    return("Master.")  
-
-  } else if (length(grep("Mrs.", name)) > 0) {
-    return("Mrs.")  
-
-  } else if (length(grep("Mr.", name)) > 0) {
-    return("Mr.")
-
-  } else
-    return("Other")
+  if(length(grep("Miss.", name)) > 0 ) {
+    return("Miss.")
+  
+    } else if (length(grep("Master.", name)) > 0) {
+      return("Master.")  
+  
+    } else if (length(grep("Mrs.", name)) > 0) {
+      return("Mrs.")  
+  
+    } else if (length(grep("Mr.", name)) > 0) {
+      return("Mr.")
+  
+    } else
+      return("Other")
 }
 
 titles <- NULL
