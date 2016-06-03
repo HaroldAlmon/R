@@ -9,10 +9,10 @@ test.survived <- data.frame( Survived = rep("None", nrow(test)), test[,])
 test.survived <- data.frame( rep("None", nrow(test)), test[,])
 
 # Flip columns 1 and 2 so the data can merge with the training data...
-train2 <- train[,c(2,1,3,4,5,6,7,8,9,10,11,12)]
+trainC12 <- train[,c(2,1,3,4,5,6,7,8,9,10,11,12)]
 
 # Merge the Train and Survived data frames...
-data.combined <- rbind(train2, test.survived)
+data.combined <- rbind(trainC12, test.survived)
 
 # Change the columns to enums...
 data.combined$Pclass <- factor(data.combined$Pclass)
@@ -50,9 +50,9 @@ males[1:5,]
 head(males)
 
 
-train2$Pclass <- factor(train$Pclass)
+trainC12$Pclass <- factor(train$Pclass)
 
-p <- ggplot(train2, aes(x = Pclass, fill = factor(Survived)))
+p <- ggplot(trainC12, aes(x = Pclass, fill = factor(Survived)))
 p <- p + geom_bar(width=1, colour="white") + 
   ylab("Toal Count") + 
   xlab("Passenger Class") +
@@ -61,14 +61,14 @@ p
 
 # Display graph of survival rates...
 library(ggplot2)
-ggplot(train2, aes(x = Pclass, fill = factor(Survived))) +
+ggplot(trainC12, aes(x = Pclass, fill = factor(Survived))) +
   geom_bar(width=1, colour="white") + 
   ylab("Toal Count") + 
   xlab("Passenger Class") +
   labs(fill = "Survived")
 
 # flip x and y coordinates
-ggplot(train2, aes(x = Pclass, fill = factor(Survived))) +
+ggplot(trainC12, aes(x = Pclass, fill = factor(Survived))) +
   geom_bar(width=1, colour="white") + 
   ylab("Toal Count") + 
   xlab("Passenger Class") +
