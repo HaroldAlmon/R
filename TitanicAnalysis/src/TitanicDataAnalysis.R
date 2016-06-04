@@ -121,3 +121,24 @@ ggplot(data.combined[1:891,], aes(x = title, fill = factor(Survived))) +
 }
 
 passengerClassAndTitleGraph()
+
+ageSexClassGraph <- function () {
+ggplot(data.combined[1:891,], aes(x = Age, fill = factor(Survived))) +
+  geom_histogram(binwidth = 10) + 
+  facet_wrap(~Sex + Pclass) +
+  ylab("Total Count") + 
+  xlab("Age") +
+  labs(fill = "Survived")
+}
+ageSexClassGraph()
+
+ageSexGraph <- fuction() {
+  ggplot(data.combined[1:891,], aes(x = Age, fill = factor(Survived))) +
+    geom_histogram(binwidth = 10) + 
+    facet_wrap(~Sex) +
+    ylab("Total Count") + 
+    xlab("Age") +
+    labs(fill = "Survived")
+}
+
+
