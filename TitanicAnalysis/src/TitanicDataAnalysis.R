@@ -216,7 +216,7 @@ parchByPclassTitleGraph <- function() {
 }
 
 # Parch by title...
-parchByPclassTitleGraph <- function() {
+parchPclassTitleGraph <- function() {
   ggplot(data.combined[1:891,], aes(x = Parch, fill = factor(Survived))) +
     geom_bar(width=1, colour="white") + 
     facet_wrap(~title) +
@@ -225,8 +225,23 @@ parchByPclassTitleGraph <- function() {
     ylim(0,150) +
     labs(fill = "Survived")
 }
-parchByPclassTitleGraph()
+parchPclassTitleGraph()
 
+# Feature engineering, create a family size feature
+temp.sibsp <- c(train$SibSp, test$SibSp)
+temp.parch <- c(train$Parch, test$Parch)
 
+data.combined$family.size <- as.factor(temp.sibsp + temp.parch + 1)
 
+FamilySizeGraph <- function() {
+  ggplot(data.combined[1:891,], aes(x = family.size, fill = factor(Survived))) +
+    geom_bar(width=1, colour="white") + 
+    facet_wrap(~Pclass + title) +
+    ylab("Count") + 
+    xlab("Parch") +
+    ylim(0,300) +
+    ggtitle("Pclass, tittle") +
+    labs(fill = "Survived")
+}
 
+FamilySizeGraph()
