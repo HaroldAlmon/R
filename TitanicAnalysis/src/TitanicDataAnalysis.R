@@ -215,8 +215,10 @@ parchByPclassTitleGraph <- function() {
     labs(fill = "Survived")
 }
 
-# Parch by title...
-parchPclassTitleGraph <- function() {
+parchByPclassTitleGraph()
+
+# ParchByTitle...
+parchByTitleGraph <- function() {
   ggplot(data.combined[1:891,], aes(x = Parch, fill = factor(Survived))) +
     geom_bar(width=1, colour="white") + 
     facet_wrap(~title) +
@@ -225,7 +227,9 @@ parchPclassTitleGraph <- function() {
     ylim(0,150) +
     labs(fill = "Survived")
 }
-parchPclassTitleGraph()
+parchByTitleGraph()
+
+#------------- End of video 2 --------------
 
 # Feature engineering, create a family size feature
 temp.sibsp <- c(train$SibSp, test$SibSp)
@@ -233,15 +237,60 @@ temp.parch <- c(train$Parch, test$Parch)
 
 data.combined$family.size <- as.factor(temp.sibsp + temp.parch + 1)
 
-FamilySizeGraph <- function() {
+familySizeByPclassTitleGraph <- function() {
   ggplot(data.combined[1:891,], aes(x = family.size, fill = factor(Survived))) +
     geom_bar(width=1, colour="white") + 
     facet_wrap(~Pclass + title) +
-    ylab("Count") + 
-    xlab("Parch") +
+    ylab("Total Count") + 
+    xlab("family.size") +
     ylim(0,300) +
     ggtitle("Pclass, tittle") +
     labs(fill = "Survived")
 }
 
-FamilySizeGraph()
+familySizeByPclassTitleGraph()
+
+# Look at the first character in the ticket
+str(data.combined$Ticket)
+data.combined$Ticket <- as.character(data.combined$Ticket)
+
+ticket.first.char <- ifelse(data.combined$Ticket == "", " ", substr(data.combined$Ticket, 1,1 ))
+unique(ticket.first.char)
+
+# Make the first character a factor
+data.combined$ticket.first.char <- as.factor(ticket.first.char)
+
+firstCharGraph <- function() {
+  ggplot(data.combined[1:891,], aes(x = ticket.first.char, fill = factor(Survived))) +
+    geom_bar(width=1, colour="white") + 
+    ylab("Total Count") + 
+    xlab("ticket.first.char") +
+    ylim(0,350) +
+    labs(fill = "Survived")
+}
+firstCharGraph()
+
+firstCharByPclassGraph <- function() {
+  ggplot(data.combined[1:891,], aes(x = ticket.first.char, fill = factor(Survived))) +
+    geom_bar(width=1, colour="white") + 
+    facet_wrap(~Pclass) +
+    ylab("Total Count") + 
+    xlab("ticket.first.char") +
+    ylim(0,350) +
+    labs(fill = "Survived")
+}
+firstCharByPclassGraph()
+
+firstCharByPclassTitleGraph <- function() {
+  ggplot(data.combined[1:891,], aes(x = ticket.first.char, fill = factor(Survived))) +
+    geom_bar(width=1, colour="white") + 
+    facet_wrap(~Pclass + title) +
+    ylab("Total Count") + 
+    xlab("ticket.first.char") +
+    ylim(0,200) +
+    labs(fill = "Survived")
+}
+firstCharByPclassTitleGraph()
+
+
+
