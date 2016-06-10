@@ -292,5 +292,16 @@ firstCharByPclassTitleGraph <- function() {
 }
 firstCharByPclassTitleGraph()
 
+# The fares the Totanic passengers paid...
+summary (data.combined$Fare)
+length(unique(data.combined$Fare))
 
-
+fareGraph <- function() {
+  ggplot(data.combined, aes(x = Fare)) +
+    geom_histogram(binwidth = 5) +
+    ggtitle("Combined Fare Distribution") +
+    ylab("Total Count") + 
+    xlab("Fare") +
+    ylim(0,200)
+}
+fareGraph()
