@@ -229,7 +229,7 @@ parchByTitleGraph <- function() {
 }
 parchByTitleGraph()
 
-#------------- End of video 2 --------------
+#------------- End of Part 2 --------------
 
 # Feature engineering, create a family size feature
 temp.sibsp <- c(train$SibSp, test$SibSp)
@@ -292,7 +292,7 @@ firstCharByPclassTitleGraph <- function() {
 }
 firstCharByPclassTitleGraph()
 
-# The fares the Totanic passengers paid...
+# The fares the Titanic passengers paid...
 summary (data.combined$Fare)
 length(unique(data.combined$Fare))
 
@@ -305,3 +305,63 @@ fareGraph <- function() {
     ylim(0,200)
 }
 fareGraph()
+
+fareByPclassTitleGraph <- function() {
+  ggplot(data.combined[1:891,], aes(x = Fare, fill = factor(Survived))) +
+    geom_histogram(binwidth = 5) +
+    facet_wrap(~Pclass + title) +
+    ylab("Total Count") + 
+    xlab("Fare") +
+    ylim(0,50) +
+    labs(fill = "Survived")
+}
+fareByPclassTitleGraph()
+
+# Analysis of the cabin variable...
+str(data.combined$Cabin)
+
+data.combined$Cabin <- as.character(data.combined$Cabin)
+data.combined$Cabin[1:100]
+
+data.combined[which(data.combined$Cabin == ""), "Cabin"] <- "U"
+
+cabin.first.char <- as.factor(substr(data.combined$Cabin,1,1))
+str(cabin.first.char)
+levels(cabin.first.char)
+table(cabin.first.char)
+
+data.combined$cabin.first.char <- cabin.first.char
+
+cabinGraph <- function() {
+  ggplot(data.combined[1:891,], aes(x = cabin.first.char, fill = Survived)) +
+    geom_bar() +
+    ylab("Total Count") + 
+    xlab("cabin.first.char") +
+    ylim(0,900) +
+    labs(fill = "Survived")
+}
+cabinGraph()
+
+cabinByPclassGraph <- function() {
+  ggplot(data.combined[1:891,], aes(x = cabin.first.char, fill = Survived)) +
+    geom_bar() +
+    facet_wrap(~Pclass) +
+    ggtitle("Survivability by cabin.first.char") +
+    ylab("Total Count") + 
+    xlab("cabin.first.char") +
+    ylim(0,500) +
+    labs(fill = "Survived")
+}
+cabinByPclassGraph()
+
+cabinByPclassTitleGraph <- function() {
+  ggplot(data.combined[1:891,], aes(x = cabin.first.char, fill = Survived)) +
+    geom_bar() +
+    facet_wrap(~Pclass + title) +
+    ggtitle("Survivability by cabin.first.char") +
+    ylab("Total Count") + 
+    xlab("cabin.first.char") +
+    ylim(0,500) +
+    labs(fill = "Survived")
+}
+cabinByPclassTitleGraph()
