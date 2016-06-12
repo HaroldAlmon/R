@@ -1,6 +1,8 @@
 train <- read.csv("../data/train.csv", header = TRUE)
 test <- read.csv("../data/test.csv", header = TRUE)
 
+library(stringr)
+library(ggplot2)
 
 # Add a column, set the name to Survived...
 test.survived <- data.frame( Survived = rep("None", nrow(test)), test[,])
@@ -33,7 +35,6 @@ dupe.names <- data.combined[which(duplicated(as.character(data.combined$Name))),
 data.combined[which( data.combined$Name %in% dupe.names),]
 dupeNames <- data.combined[which( data.combined$Name %in% dupe.names),"Name"]
 
-library(stringr)
 # Display the first 5 misses...
 misses <- data.combined[which( str_detect(data.combined$Name, "Miss.") ),]
 misses[1:5,]
@@ -47,10 +48,7 @@ males <- data.combined[which( data.combined$Sex == "male" ),]
 males[1:5,]
 head(males)
 
-
 trainFlip$Pclass <- factor(train$Pclass)
-
-library(ggplot2)
 
 ageSexGraph <- function() {
   ggplot(data.combined[1:891,], aes(x = Age, fill = factor(Survived))) +
@@ -117,10 +115,22 @@ for(i in 1:nrow(data.combined)) {
 # Add title column to the end...
 data.combined$title <- as.factor(titles)
 
+#------------- End of Part 1 --------------
+table(data.combined$Sex)
+
+sexGraph <- function() {
+  ggplot(data.combined[1:891,], aes(x = Sex, fill = factor(Survived))) +
+    geom_bar(width=1, colour="white") + 
+    ggtitle("Pclass") + 
+    facet_wrap(~Pclass) +
+    ylab("Count") + 
+    xlab("Gender") +
+    labs(fill = "Survived")
+}
+sexGraph()
+
 # Add title column to the beginning...
 data.combined.title <- data.frame( title = as.factor(titles), data.combined[,] )
-
-library(ggplot2)
 
 passengerClassAndTitleGraph <- function() {
 ggplot(data.combined[1:891,], aes(x = title, fill = factor(Survived))) +
@@ -365,3 +375,35 @@ cabinByPclassTitleGraph <- function() {
     labs(fill = "Survived")
 }
 cabinByPclassTitleGraph()
+
+# Passengers with multiple Cabins...
+data.combined$multiple.cabins <- as.factor(ifelse(str_detect( data.combined$Cabin, " "), "Y", "N"))
+
+multipleCabinsByPclassTitleGraph <- function() {
+  ggplot(data.combined[1:891,], aes(x = multiple.cabins, fill = Survived)) +
+    geom_bar() +
+    facet_wrap(~Pclass + title) +
+    ggtitle("Survivability by multiple.cabins") +
+    ylab("Total Count") + 
+    xlab("multiple.cabins") +
+    ylim(0,350) +
+    labs(fill = "Survived")
+}
+multipleCabinsByPclassTitleGraph()
+
+# Does suvivability depend on where you embarked the Titanic?
+str(data.combined$Embarked)
+levels(data.combined$Embarked)
+table(data.combined$Embarked)
+
+embarkmentByPclassTitleGraph <- function() {
+  ggplot(data.combined[1:891,], aes(x = Embarked, fill = Survived)) +
+    geom_bar() +
+    facet_wrap(~Pclass + title) +
+    ggtitle("Survivability by Embarkment") +
+    ylab("Total Count") + 
+    xlab("Embarked") +
+    ylim(0,260) +
+    labs(fill = "Survived")
+}
+embarkmentByPclassTitleGraph()
