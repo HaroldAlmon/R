@@ -1,3 +1,5 @@
+# Introduction to Data Science with R - Data Analysis
+
 train <- read.csv("../data/train.csv", header = TRUE)
 test <- read.csv("../data/test.csv", header = TRUE)
 
@@ -210,7 +212,6 @@ sibSpByPclassTitle <- function() {
 }
 sibSpByPclassTitle()
 
-
 # Turn parch into a factor
 data.combined$Parch <- as.factor( data.combined$Parch )
 
@@ -400,7 +401,7 @@ embarkmentByPclassTitleGraph <- function() {
   ggplot(data.combined[1:891,], aes(x = Embarked, fill = Survived)) +
     geom_bar() +
     facet_wrap(~Pclass + title) +
-    ggtitle("Survivability by Embarkment") +
+    ggtitle("Survivability by Embarked") +
     ylab("Total Count") + 
     xlab("Embarked") +
     ylim(0,260) +
