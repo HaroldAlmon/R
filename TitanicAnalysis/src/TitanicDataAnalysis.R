@@ -408,3 +408,5 @@ embarkmentByPclassTitleGraph <- function() {
     labs(fill = "Survived")
 }
 embarkmentByPclassTitleGraph()
+
+# end of Part 3
