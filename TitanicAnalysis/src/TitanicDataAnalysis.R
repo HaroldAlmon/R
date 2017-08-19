@@ -3,6 +3,8 @@
 train <- read.csv("../data/train.csv", header = TRUE)
 test <- read.csv("../data/test.csv", header = TRUE)
 
+######install.packages("ggplot2", dependencies = TRUE)
+
 library(stringr)
 library(ggplot2)
 
