@@ -125,7 +125,7 @@ table(data.combined$Sex)
 sexGraph <- function() {
   ggplot(data.combined[1:891,], aes(x = Sex, fill = factor(Survived))) +
     geom_bar(width=1, colour="white") + 
-    ggtitle("Pclass") + 
+    ggtitle("Passenger Class") + 
     facet_wrap(~Pclass) +
     ylab("Count") + 
     xlab("Gender") +
@@ -359,7 +359,7 @@ cabinByPclassGraph <- function() {
   ggplot(data.combined[1:891,], aes(x = cabin.first.char, fill = Survived)) +
     geom_bar() +
     facet_wrap(~Pclass) +
-    ggtitle("Survivability by cabin.first.char") +
+    ggtitle("Survivability by Passenger Class") +
     ylab("Total Count") + 
     xlab("cabin.first.char") +
     ylim(0,500) +

@@ -68,3 +68,30 @@ data.combined[which(data.combined$Name %in% dup.names),c(4,5,6,9), ]
 dup.passengers[1:2,]
 dup.passengers[,c(1,3,5)]
 
+
+extractTitle <- function(name) {
+  name <- as.character(name)
+  
+  if(length(grep("Miss.", name)) > 0 ) {
+    return("Miss.")
+    
+  } else if (length(grep("Master.", name)) > 0) {
+    return("Master.")  
+    
+  } else if (length(grep("Mrs.", name)) > 0) {
+    return("Mrs.")  
+    
+  } else if (length(grep("Mr.", name)) > 0) {
+    return("Mr.")
+    
+  } else
+    return("Other")
+}
+
+titles <- NULL
+for(i in 1:nrow(data.combined)) {
+  titles <- c(titles, extractTitle(data.combined[i, "Name"]))
+}
+
+# Add a new column with mutating data.combined.
+data.combined2 <- data.frame( data.combined, Title = titles )
