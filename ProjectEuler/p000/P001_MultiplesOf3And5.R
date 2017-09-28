@@ -18,4 +18,9 @@ multiplesOf3And5 <- function(upperLimit)  {
       calculateSumBelowLimit(upperLimit, 15);
 }
 
-multiplesOf3And5(1000)
+# Unit test
+if ( multiplesOf3And5(1000) != 233168 ) {
+    "fail"
+  } else {
+    "pass"
+  }
