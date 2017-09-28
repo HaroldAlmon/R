@@ -1,4 +1,6 @@
 # Strategy: Brute Force.
+# Similar to finding the maximum palindrome in the set (n thru 1) * (n thru 1)
+
 largestPalindromeProduct <- function(numberLength) {
       if (numberLength < 1) 
       {
@@ -15,7 +17,7 @@ largestPalindromeProduct <- function(numberLength) {
 reverseEnumerateNum1 <- function(upperLimit, largestProduct) {
       product = largestProduct
       num1 = upperLimit
-      while ( num1 > upperLimit/10 ) {
+      while ( num1 > upperLimit * 0.9 ) {
         product = reverseEnumerateNum2(upperLimit, product, num1)
         num1 <- num1 - 1
       }
@@ -25,7 +27,7 @@ reverseEnumerateNum1 <- function(upperLimit, largestProduct) {
 reverseEnumerateNum2 <- function(upperLimit, inputProduct, num1) {
       largestProduct = inputProduct
       num2 = upperLimit
-      while ( num2 > upperLimit/10 ) {
+      while ( num2 > upperLimit * 0.9 ) {
         product = num1 * num2
         if (isPalindrome(product) )
         {
@@ -41,17 +43,19 @@ reverseEnumerateNum2 <- function(upperLimit, inputProduct, num1) {
     
 isPalindrome <- function(n) {
       number = as.character(n)
-      left = 0
-      right = length(number) - 1
+      left = 1
+      right = nchar(number)
       while (left < right ) {
-        if (substring(number, left, left) != substring(number, right, right)) {
+        if (substring(number, left, left) != substring(number, right, right)) 
           return(FALSE)
-        }
+        
         left <- left + 1
         right <- right - 1
       }
       TRUE
 }
 
-result <- largestPalindromeProduct(3)
+result <- largestPalindromeProduct(4)
 result
+if (result == 99000099)
+  cat("Pass")
