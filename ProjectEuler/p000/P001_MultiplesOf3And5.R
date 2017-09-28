@@ -19,8 +19,9 @@ multiplesOf3And5 <- function(upperLimit)  {
 }
 
 # Unit test
-if ( multiplesOf3And5(1000) != 233168 ) {
-    "fail"
+result = multiplesOf3And5(1000)
+if ( answer != 233168 ) {
+    cat( "Result = ", result,", fail")
   } else {
-    "pass"
+    cat( "Result = ", result,", pass")
   }
