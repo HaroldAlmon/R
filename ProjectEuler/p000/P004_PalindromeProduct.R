@@ -16,19 +16,20 @@ largestPalindromeProduct <- function(numberLength) {
 
 enumerate_n1 <- function(upperLimit, lowerLimit, largestProduct) {
       product = largestProduct
-      num1 = upperLimit
       
-      while ( num1 > lowerLimit ) {
+      for (num1 in upperLimit:lowerLimit) {
         product = enumerate_n2(upperLimit, lowerLimit, product, num1)
-        num1 <- num1 - 1
       }
+      
       product
     }
     
 enumerate_n2 <- function(upperLimit, lowerLimit, inputProduct, num1) {
       largestProduct = inputProduct
-      num2 = upperLimit
-      while ( num2 > lowerLimit ) {
+      
+      for ( num2 in upperLimit:lowerLimit ) {
+        
+        #See comment at the beginning...
         product = num1 * num2
         if (isPalindrome(product) ) {
           if (product > largestProduct) {
@@ -36,8 +37,8 @@ enumerate_n2 <- function(upperLimit, lowerLimit, inputProduct, num1) {
             break
           }
         }
-        num2 <- num2 - 1
       }
+      
       largestProduct
     }
     
@@ -45,6 +46,7 @@ isPalindrome <- function(n) {
       number = as.character(n)
       left = 1
       right = nchar(number)
+      
       while (left < right ) {
         if (substring(number, left, left) != substring(number, right, right)) 
           return(FALSE)
