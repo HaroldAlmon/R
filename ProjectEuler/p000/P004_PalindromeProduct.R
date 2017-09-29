@@ -1,9 +1,8 @@
 # Strategy: Brute Force.
-# Similar to finding the maximum palindrome in the set (n thru 1) * (n thru 1)
+# Similar to finding the maximum palindrome in the set (n1 thru 1) * (n2 thru 1)
 
 largestPalindromeProduct <- function(numberLength) {
-      if (numberLength < 1) 
-      {
+      if (numberLength < 1) {
         cat("Number length must be greater than zero")
         return -1
       }
@@ -55,7 +54,7 @@ isPalindrome <- function(n) {
       TRUE
 }
 
-result <- largestPalindromeProduct(4)
+result <- largestPalindromeProduct(5)
 result
 if (result == 99000099)
   cat("Pass")
