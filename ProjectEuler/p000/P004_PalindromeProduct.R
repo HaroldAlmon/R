@@ -9,27 +9,28 @@ largestPalindromeProduct <- function(numberLength) {
       upperLimit = 10^numberLength - 1
       largestProduct = 0
       
-      largestProduct = reverseEnumerateNum1(upperLimit, largestProduct)
+      # No need to go to 1 for the lower limit, use a higher limit (0.9) for faster speed...
+      largestProduct = enumerate_n1(upperLimit, upperLimit * 0.9, largestProduct)
       largestProduct
 }
 
-reverseEnumerateNum1 <- function(upperLimit, largestProduct) {
+enumerate_n1 <- function(upperLimit, lowerLimit, largestProduct) {
       product = largestProduct
       num1 = upperLimit
-      while ( num1 > upperLimit * 0.9 ) {
-        product = reverseEnumerateNum2(upperLimit, product, num1)
+      
+      while ( num1 > lowerLimit ) {
+        product = enumerate_n2(upperLimit, lowerLimit, product, num1)
         num1 <- num1 - 1
       }
       product
     }
     
-reverseEnumerateNum2 <- function(upperLimit, inputProduct, num1) {
+enumerate_n2 <- function(upperLimit, lowerLimit, inputProduct, num1) {
       largestProduct = inputProduct
       num2 = upperLimit
-      while ( num2 > upperLimit * 0.9 ) {
+      while ( num2 > lowerLimit ) {
         product = num1 * num2
-        if (isPalindrome(product) )
-        {
+        if (isPalindrome(product) ) {
           if (product > largestProduct) {
             largestProduct = product
             break
@@ -54,7 +55,7 @@ isPalindrome <- function(n) {
       TRUE
 }
 
-result <- largestPalindromeProduct(5)
-result
+result <- largestPalindromeProduct(4)
+cat(result, "\n")
 if (result == 99000099)
-  cat("Pass")
+  cat("Pass") else cat("Fail")
