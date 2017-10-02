@@ -59,5 +59,8 @@ isPalindrome <- function(n) {
 
 result <- largestPalindromeProduct(4)
 cat(result, "\n")
-if (result == 99000099)
-  cat("Pass") else cat("Fail")
+
+if (result == 99000099) {
+  cat("Pass")
+} else 
+  cat("Fail")
