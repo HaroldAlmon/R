@@ -9,7 +9,7 @@ largestPalindromeProduct <- function(numberLength) {
       upperLimit = 10^numberLength - 1
       largestProduct = 0
       
-      # No need to go to 1 for the lower limit, use a higher limit (0.9) for faster speed...
+      # No need to go to 1 for the lower limit, use a higher limit (0.9 of upper limit) for faster speed...
       largestProduct = enumerate_n1(upperLimit, upperLimit * 0.9, largestProduct)
       largestProduct
 }

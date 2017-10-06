@@ -8,7 +8,7 @@
     for (x in 3:tripletSum - 2) {
       tripletProduct = enumerateAllYValues(tripletSum, x);
       if (tripletProduct !=  0)
-        break;
+        break
     }
     tripletProduct
   }
