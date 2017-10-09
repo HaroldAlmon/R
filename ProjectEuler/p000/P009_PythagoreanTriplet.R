@@ -23,7 +23,7 @@
       if ( isPythogoreanTriplet(x, r, y) ) {
         tripletProduct = x*y*r
         if (isDebug) {
-          str <- sprintf("Triplet (x, y, r) = (%d,%d,%d)\n", x,y,r)
+          str <- sprintf("Triplet (x, y, r) = (%d,%d,%d) where x + y + r = 1000", x,y,r)
           cat(str, "\n")
         }
       }
