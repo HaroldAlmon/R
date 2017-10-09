@@ -36,7 +36,9 @@ data.combined[which(duplicated(as.character(data.combined$Name))),"Name"]
 
 # Display the dupplicate names...
 dupe.names <- data.combined[which(duplicated(as.character(data.combined$Name))),"Name"]
+
 data.combined[which( data.combined$Name %in% dupe.names),]
+
 dupeNames <- data.combined[which( data.combined$Name %in% dupe.names),"Name"]
 
 # Display the first 5 misses...
@@ -161,7 +163,7 @@ ageSexClassGraph()
 boys <- data.combined[ which(data.combined$title == "Master."),]
 summary(boys$Age)
 
-# We knwo that Miss is more complicated, let's examine further
+# We know that Miss is more complicated, let's examine further
 misses <- data.combined[ which(data.combined$title == "Miss."),]
 summary(misses$Age)
 
@@ -177,7 +179,7 @@ ggplot( misses[misses$Survived != "None",], aes(x = Age, fill = Survived) ) +
 
 missesSurvived()
 
-# Missises traveling alone with no siblings or spouses or parents...
+# Misses traveling alone with no siblings or spouses or parents...
 misses.alone <- misses[ which(misses$SibSp == 0 & misses$Parch == 0), ]
 summary(misses.alone$Age)
 length(which(misses.alone$Age <= 14.5))
@@ -191,6 +193,7 @@ length( unique(data.combined$SibSp) )
 data.combined$SibSp <- as.factor( data.combined$SibSp )
 
 # Sibsp graph function...
+# <<<ERROR>>>
 sibspGraph <- function () {
   ggplot(data.combined[1:891,], aes(x = SibSp, fill = Survived)) +
     geom_histogram(binwidth = 1) + 
@@ -221,7 +224,7 @@ data.combined$Parch <- as.factor( data.combined$Parch )
 parchByPclassTitleGraph <- function() {
   ggplot(data.combined[1:891,], aes(x = Parch, fill = factor(Survived))) +
     geom_bar(width=1, colour="white") + 
-    facet_wrap(~Pclass + title) +
+    #facet_wrap(~Pclass + title) +
     ylab("Count") + 
     xlab("Parch") +
     ylim(0,150) +
