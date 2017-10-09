@@ -3,13 +3,13 @@
 train <- read.csv("../data/train.csv", header = TRUE)
 test <- read.csv("../data/test.csv", header = TRUE)
 
-######install.packages("ggplot2", dependencies = TRUE)
+####install.packages("ggplot2", dependencies = TRUE)
 
 library(stringr)
 library(ggplot2)
 
 # Add a column, set the name to Survived...
-test.survived <- data.frame( Survived = rep("None", nrow(test)), test[,])
+#test.survived <- data.frame( Survived = rep("None", nrow(test)), test[,])
 
 # Flip columns 1 and 2 so the data can merge with the training data...
 trainFlip <- train[,c(2,1,3,4,5,6,7,8,9,10,11,12)]
@@ -17,7 +17,7 @@ trainFlip <- train[,c(2,1,3,4,5,6,7,8,9,10,11,12)]
 # Merge the Train and Survived data frames...
 data.combined <- rbind(trainFlip, test.survived)
 
-# Change the columns to enums...
+#tablr# Change the columns to enums...
 data.combined$Pclass <- factor(data.combined$Pclass)
 data.combined$Survived <- factor(data.combined$Survived)
 
