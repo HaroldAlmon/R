@@ -115,6 +115,8 @@ extractTitle <- function(name) {
 
 titles <- NULL
 for(i in 1:nrow(data.combined)) {
+  
+  # Append the extracted title to the end of the titles vector
   titles <- c(titles, extractTitle(data.combined[i, "Name"]))
 }
 

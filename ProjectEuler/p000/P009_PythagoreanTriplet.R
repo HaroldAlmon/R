@@ -43,5 +43,5 @@
     } else 
       cat("Fail", "\n")
   }
-  
+   
   PythagoreanTriplet()
