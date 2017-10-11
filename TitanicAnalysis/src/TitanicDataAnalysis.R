@@ -184,6 +184,8 @@ missesSurvived()
 # Misses traveling alone with no siblings or spouses or parents...
 misses.alone <- misses[ which(misses$SibSp == 0 & misses$Parch == 0), ]
 summary(misses.alone$Age)
+
+# 14.5 is used because that's the maximum age for a passenger with the title of Master...
 length(which(misses.alone$Age <= 14.5))
 
 summary( data.combined$SibSp )
@@ -247,13 +249,15 @@ parchByTitleGraph <- function() {
 }
 parchByTitleGraph()
 
-#------------- End of Part 2 --------------
 
 # Feature engineering, create a family size feature
 temp.sibsp <- c(train$SibSp, test$SibSp)
 temp.parch <- c(train$Parch, test$Parch)
 
+# Family size = Siblings or spouse plus paarents or children plus self...
 data.combined$family.size <- as.factor(temp.sibsp + temp.parch + 1)
+
+#------------- End of Part 2 --------------
 
 familySizeByPclassTitleGraph <- function() {
   ggplot(data.combined[1:891,], aes(x = family.size, fill = factor(Survived))) +
