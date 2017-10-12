@@ -23,7 +23,7 @@ data.combined$Survived <- factor(data.combined$Survived)
 
 # Display the counts...
 table(data.combined$Survived)
-table(data.combined$Pclass)
+ttable(data.combined$Pclass)
 
 # The number of unique names...
 length(unique(as.character(data.combined$Name)))
@@ -266,7 +266,7 @@ familySizeByPclassTitleGraph <- function() {
     ylab("Total Count") + 
     xlab("family.size") +
     ylim(0,300) +
-    ggtitle("Pclass, tittle") +
+    ggtitle("Passenger Class, Title") +
     labs(fill = "Survived")
 }
 
@@ -421,3 +421,24 @@ embarkmentByPclassTitleGraph <- function() {
 embarkmentByPclassTitleGraph()
 
 # end of Part 3
+
+# Part 4
+library(randomForest)
+rf.train.1 <- data.combined[1:891,c("Pclass","title")]
+rf.label <- as.factor(train$Survived)
+set.seed(1234)
+rf.1 <- randomForest(x=rf.train.1, y=rf.label,importance=TRUE, ntree=1000)
+rf.1
+varImpPlot(rf.1)
+
+rf.train.2 <- data.combined[1:891,c("Pclass","title", "SibSp")]
+set.seed(1234)
+rf.2 <- randomForest(x=rf.train.2, y=rf.label,importance=TRUE, ntree=1000)
+rf.2
+varImpPlot(rf.2)
+
+rf.train.4 <- data.combined[1:891,c("Pclass","title", "SibSp", "Parch")]
+set.seed(1234)
+rf.4 <- randomForest(x=rf.train.4, y=rf.label,importance=TRUE, ntree=1000)
+rf.4
+varImpPlot(rf.4)
