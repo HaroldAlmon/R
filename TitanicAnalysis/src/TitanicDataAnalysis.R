@@ -442,3 +442,10 @@ set.seed(1234)
 rf.4 <- randomForest(x=rf.train.4, y=rf.label,importance=TRUE, ntree=1000)
 rf.4
 varImpPlot(rf.4)
+
+# BEST results...
+rf.train.5 <- data.combined[1:891,c("Pclass","title", "family.size")]
+set.seed(1234)
+rf.5 <- randomForest(x=rf.train.5, y=rf.label,importance=TRUE, ntree=1000)
+rf.5
+varImpPlot(rf.5)
