@@ -259,6 +259,7 @@ data.combined$family.size <- as.factor(temp.sibsp + temp.parch + 1)
 
 #------------- End of Part 2 --------------
 
+#------------- Part 2 --------------
 familySizeByPclassTitleGraph <- function() {
   ggplot(data.combined[1:891,], aes(x = family.size, fill = factor(Survived))) +
     geom_bar(width=1, colour="white") + 
@@ -422,7 +423,7 @@ embarkmentByPclassTitleGraph()
 
 # end of Part 3
 
-# Part 4
+################### Part 4
 library(randomForest)
 rf.train.1 <- data.combined[1:891,c("Pclass","title")]
 rf.label <- as.factor(train$Survived)
@@ -437,7 +438,7 @@ rf.2 <- randomForest(x=rf.train.2, y=rf.label,importance=TRUE, ntree=1000)
 rf.2
 varImpPlot(rf.2)
 
-rf.train.4 <- data.combined[1:891,c("Pclass","title", "SibSp", "Parch")]
+rf.train.4 <- data.combined[?1:891,c("Pclass","title", "SibSp", "Parch")]
 set.seed(1234)
 rf.4 <- randomForest(x=rf.train.4, y=rf.label,importance=TRUE, ntree=1000)
 rf.4
@@ -449,3 +450,14 @@ set.seed(1234)
 rf.5 <- randomForest(x=rf.train.5, y=rf.label,importance=TRUE, ntree=1000)
 rf.5
 varImpPlot(rf.5)
+
+#------------- End of Part 4 --------------
+
+#------------- Part 5 --------------
+test.submit.df <- data.combined[892:1309, c("Pclass", "title", "family.size")]
+
+rf.5.preds <- predict(rf.5, test.submit.df)
+table(rf.5.preds)
+
+submit.df <- data.frame(PassengerId = rep(892:1309), Survived = rf.5.preds)
+write.csv(submit.df, file = "rf_sub_20171024_1.csv", row.names = FALSE)
