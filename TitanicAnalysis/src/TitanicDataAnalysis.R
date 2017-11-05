@@ -461,3 +461,40 @@ table(rf.5.preds)
 
 submit.df <- data.frame(PassengerId = rep(892:1309), Survived = rf.5.preds)
 write.csv(submit.df, file = "rf_sub_20171024_1.csv", row.names = FALSE)
+
+# Set up cross validation...
+
+library(caret)
+library(doSNOW)
+
+
+set.seed(2348)
+cv.10.folds <- createMultiFolds(rf.label, k=10, times = 10)
+
+table(rf.label)
+
+#table(cv.10.folds[[33]])
+table(rf.label[cv.10.folds[[33]]])
+
+ctrl.1 <- trainControl(method = "repeatedcv", number = 10, repeats = 10, index = cv.10.folds)
+
+cluster = makeCluster(6, type = "SOCK")
+registerDoSNOW(cluster)
+
+set.seed(34324)
+
+rf.5.cv.1 <- train(x = rf.train.5, y = rf.label, methos = "rf", tuneLength = 3,
+                   ntree = 1000, tr.Control = ctrl.1)
+
+stopCluster(cluster)
+
+###devtools::install_github('topepo/caret/pkg/caret')
+
+# had to install old version of caret to get past these errors:
+#    Error in e$fun(obj, substitute(ex), parent.frame(), e$data) : 
+#      unable to find variable "optimismBoot"
+
+#install.packages("car")
+#install.packages("C:/Users/Harold/Downloads/caret_6.0-76.tar/caret_6.0-76.tar", repos = NULL, type="source")
+
+rf.5.cv.1
